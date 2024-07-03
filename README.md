@@ -1,13 +1,72 @@
-# Sample Hardhat Project
+# Smart Contract Deployment Setup with Solidity and Ganache
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
+To set up and deploy your smart contracts locally using Ganache and Hardhat, follow these steps:
 
-Try running some of the following tasks:
+1. **Install Dependencies:**
+  Ensure you have all the necessary packages installed by running:
+  
+  `npm install`
+  
+  or
+  
+  `yarn`
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.ts
+
+2. **Launch Ganache:**
+  Start Ganache using the command:
+  
+  `ganache`
+  
+  
+  Ganache will run on the default port `8545`. Make sure Ganache is up and running before proceeding.
+
+3. **Update Hardhat Configuration:**
+Modify the `hardhat.config.js` file in your project root to include Ganache network configuration:
+```javascript
+import { HardhatUserConfig } from "hardhat/config";
+
+const config: HardhatUserConfig = {
+  solidity: "0.8.24",
+  networks: {
+    hardhat: {
+      chainId: 1337,
+    },
+    ganache: {
+      url: 'http://127.0.0.1:8545',
+      accounts: ['PRIVATE_KEY_HERE'] // Replace with your Ganache private key
+    }
+  }
+};
+
+export default config;
 ```
+
+
+Deploy with Script (Including Tests):
+Run the deployment script deploy.sh which also runs your contract tests before deployment:
+
+`bash deploy.sh ganache`
+
+or
+
+`bash deploy.sh hardhat`
+
+Note: The deployment script ensures that your contract passes all tests before attempting to deploy. If tests fail, deployment will not proceed.
+
+Deploy Without Tests:
+Directly deploy your smart contract without running tests:
+
+`npx hardhat run deploy.ts --network ganache`
+
+or
+
+`npx hardhat run deploy.ts --network hardhat`
+
+Replace [ganache | hardhat | other if you add custom network] with the appropriate network you want to deploy to.
+
+Additional Notes:
+Ensure Ganache is running and accessible via http://127.0.0.1:8545.
+Replace 'PRIVATE_KEY_HERE' in hardhat.config.js with your actual Ganache private key.
+Use appropriate commands (bash or npx hardhat) depending on whether you want to include tests during deployment.
+
+This setup allows you to develop and deploy Ethereum smart contracts locally using Ganache and Hardhat efficiently.
