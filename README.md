@@ -45,11 +45,11 @@ export default config;
 Deploy with Script (Including Tests):
 Run the deployment script deploy.sh which also runs your contract tests before deployment:
 
-`bash deploy.sh ganache`
+`npm run deploye:ganache`
 
 or
 
-`bash deploy.sh hardhat`
+`npm run deploye:hardhat`
 
 Note: The deployment script ensures that your contract passes all tests before attempting to deploy. If tests fail, deployment will not proceed.
 
